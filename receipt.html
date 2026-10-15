@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DALAPUR GRANITE - Receipt</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        color: #000;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .toolbar {
+        padding: 12px;
+        text-align: center;
+        background: #f1f3f5;
+      }
+
+      .toolbar button {
+        border: 0;
+        border-radius: 4px;
+        padding: 10px 16px;
+        margin: 0 4px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .print {
+        background: #1769d2;
+        color: white;
+      }
+
+      .back {
+        background: #ddd;
+        color: #111;
+      }
+
+      /* MAIN RECEIPT */
+      .receipt {
+        width: 100%;
+        max-width: 819px;
+        margin: 0 auto;
+        padding: 46px 40px 0;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+
+      .heading {
+        text-align: center;
+        font-weight: normal;
+        line-height: 1.55;
+      }
+
+      .ganesh {
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .address {
+        font-size: 16px;
+      }
+
+      .dashed {
+        border-top: 1.5px dashed #111;
+        margin: 11px 0;
+      }
+
+      /* DETAILS SECTION */
+      .details {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        column-gap: 20px;
+      }
+
+      .detail-row {
+        display: grid;
+
+        /* Fixed columns keep every colon aligned */
+        grid-template-columns: 100px 14px minmax(0, 1fr);
+
+        align-items: baseline;
+        column-gap: 2px;
+        margin: 8px 0;
+      }
+
+      .detail-row .label {
+        white-space: nowrap;
+      }
+
+      .detail-row .colon {
+        display: block;
+        text-align: center;
+      }
+
+      .detail-row .value {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      /* WEIGHT SECTION */
+      .weights {
+        display: grid;
+        grid-template-columns: 54% 46%;
+        column-gap: 0;
+      }
+
+      .weight-row {
+        display: grid;
+
+        /* Label, colon, number and unit have separate columns */
+        grid-template-columns: 105px 14px max-content 24px;
+
+        align-items: baseline;
+        column-gap: 6px;
+        margin: 12px 0;
+        white-space: nowrap;
+      }
+
+      .weight-row .label {
+        white-space: nowrap;
+      }
+
+      .weight-row > span:nth-child(2) {
+        display: block;
+        text-align: center;
+      }
+
+      .weight-row .number {
+        font-size: 18px;
+        text-align: left;
+      }
+
+      /* DATE AND TIME */
+      .time-row {
+        display: grid;
+        grid-template-columns: 42px 14px 88px max-content;
+        align-items: baseline;
+        column-gap: 3px;
+        margin: 12px 0;
+        white-space: nowrap;
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .time-row .label {
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+
+      /* TOTAL CHARGE */
+      .total {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        margin-top: 14px;
+        white-space: nowrap;
+        font-size: 16px;
+      }
+
+      /* FOOTER */
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+        margin-top: 8px;
+        font-size: 14px;
+        font-weight: normal;
+        white-space: nowrap;
+      }
+
+      /* MOBILE RESPONSIVE */
+      @media screen and (max-width: 650px) {
+        body {
+          width: 100%;
+          overflow-x: hidden;
+        }
+
+        .receipt {
+          width: 100%;
+          max-width: 100%;
+          padding: 22px 14px;
+          font-size: 14px;
+          line-height: 1.4;
+          overflow-wrap: anywhere;
+        }
+
+        .heading {
+          line-height: 1.6;
+        }
+
+        .ganesh {
+          font-size: 17px;
+        }
+
+        .address {
+          font-size: 13px;
+        }
+
+        .dashed {
+          margin: 10px 0;
+        }
+
+        /* Details become a single column */
+        .details {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr);
+          gap: 0;
+        }
+
+        .detail-row {
+          grid-template-columns: 100px 14px minmax(0, 1fr);
+          column-gap: 2px;
+          margin: 8px 0;
+          font-size: 14px;
+        }
+
+        .detail-row .label {
+          white-space: normal;
+        }
+
+        .detail-row .colon {
+          text-align: center;
+        }
+
+        .detail-row .value {
+          overflow-wrap: anywhere;
+        }
+
+        /* Weights and date/time stack vertically */
+        .weights {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr);
+          gap: 8px;
+        }
+
+        .weight-row {
+          grid-template-columns: 105px 14px max-content 24px;
+          column-gap: 2px;
+          margin: 12px 0;
+          font-size: 14px;
+        }
+
+        .weight-row .number {
+          font-size: 16px;
+        }
+
+        .time-row {
+          grid-template-columns: 42px 14px 88px max-content;
+          column-gap: 3px;
+          margin: 12px 0;
+          font-size: 14px;
+          font-weight: 700;
+        }
+
+        .total {
+          flex-wrap: wrap;
+          gap: 8px;
+          font-size: 14px;
+        }
+
+        .footer {
+          flex-wrap: wrap;
+          justify-content: space-between;
+          gap: 10px;
+          margin-top: 12px;
+          font-size: 12px;
+          white-space: normal;
+        }
+      }
+
+      /* EXTRA SMALL PHONES */
+      @media screen and (max-width: 360px) {
+        .receipt {
+          padding: 18px 10px;
+          font-size: 13px;
+        }
+
+        .ganesh {
+          font-size: 15px;
+        }
+
+        .address {
+          font-size: 12px;
+        }
+
+        .detail-row {
+          grid-template-columns: 90px 12px minmax(0, 1fr);
+          font-size: 13px;
+        }
+
+        .weight-row {
+          grid-template-columns: 100px 12px max-content 22px;
+          column-gap: 1px;
+          font-size: 13px;
+        }
+
+        .weight-row .number {
+          font-size: 15px;
+        }
+
+        .time-row {
+          grid-template-columns: 40px 12px 88px max-content;
+          column-gap: 2px;
+          font-size: 12px;
+        }
+
+        .total {
+          font-size: 13px;
+        }
+
+        .footer {
+          font-size: 11px;
+        }
+      }
+
+      /* PRINT */
+      @page {
+        size: A4 portrait;
+        margin: 0;
+      }
+
+      @media print {
+        .toolbar {
+          display: none !important;
+        }
+
+        html,
+        body {
+          width: 210mm;
+          min-height: 297mm;
+          margin: 0;
+          padding: 0;
+          background: #fff;
+        }
+
+        .receipt {
+          width: 100%;
+          max-width: none;
+          padding: 14mm 12mm 0;
+          font-size: 16px;
+          line-height: 1.3;
+        }
+
+        .heading {
+          line-height: 1.55;
+        }
+
+        .ganesh {
+          font-size: 18px;
+        }
+
+        .address {
+          font-size: 16px;
+        }
+
+        .details {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          column-gap: 20px;
+        }
+
+        .detail-row {
+          grid-template-columns: 100px 14px minmax(0, 1fr);
+          font-size: 16px;
+        }
+
+        .weights {
+          grid-template-columns: 54% 46%;
+          column-gap: 0;
+        }
+
+        .weight-row {
+          grid-template-columns: 105px 14px max-content 24px;
+          font-size: 16px;
+        }
+
+        .weight-row .number {
+          font-size: 18px;
+        }
+
+        .time-row {
+          grid-template-columns: 42px 14px 88px max-content;
+          font-size: 16px;
+          font-weight: 700;
+        }
+
+        .total {
+          font-size: 16px;
+        }
+
+        .footer {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="toolbar">
+      <button class="back" onclick="history.back()">← Back to Input</button>
+
+      <button class="print" onclick="window.print()">
+        Print / Save as PDF
+      </button>
+    </div>
+
+    <section class="receipt">
+      <header class="heading">
+        <div class="ganesh">// SHREE GANESHAY NAMAH //</div>
+        <div>OM GRANITE UNIT 2</div>
+        <div class="address">MAHVAYA SARWAI GAURIHAR DIST.-CHHATTARPUR</div>
+      </header>
+
+      <div class="dashed"></div>
+
+      <div class="details">
+        <div>
+          <div class="detail-row">
+            <span class="label">RST NO.</span>
+            <span class="colon">:</span>
+            <span class="value" id="p-rst">55737</span>
+          </div>
+
+          <div class="detail-row">
+            <span class="label">Consignor</span>
+            <span class="colon">:</span>
+            <span class="value" id="p-consignor"
+              >Girrajji Buildtech pvt. Ltd</span
+            >
+          </div>
+
+          <div class="detail-row">
+            <span class="label">Transporter</span>
+            <span class="colon">:</span>
+            <span class="value" id="p-transporter">SHUBHAM GUPTA</span>
+          </div>
+
+          <div class="detail-row">
+            <span class="label">TYRE</span>
+            <span class="colon">:</span>
+            <span class="value">18 TYRE</span>
+          </div>
+
+          <div class="detail-row">
+            <span class="label">MO. NO.</span>
+            <span class="colon">:</span>
+            <span class="value" id="p-mobile">7897919953</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="detail-row">
+            <span class="label">Veh NO.</span>
+            <span class="colon">:</span>
+            <span class="value" id="p-vehicle">UP71BT2969</span>
+          </div>
+
+          <div class="detail-row">
+            <span class="label">Consignee</span>
+            <span class="colon">:</span>
+            <span class="value">DALAPUR SARKAR GRANITE</span>
+          </div>
+
+          <div class="detail-row">
+            <span class="label">Mineral</span>
+            <span class="colon">:</span>
+            <span class="value" id="p-mineral">20MM[O]NON VSI</span>
+          </div>
+
+          <div class="detail-row">
+            <span class="label">Driver Name</span>
+            <span class="colon">:</span>
+            <span class="value" id="p-driver">SURAJ</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashed"></div>
+
+      <div class="weights">
+        <div>
+          <div class="weight-row">
+            <span class="label">Gross weight</span>
+            <span>:</span>
+            <span class="number" id="p-gross">57100</span>
+            <span>kg</span>
+          </div>
+
+          <div class="weight-row">
+            <span class="label">Tare weight</span>
+            <span>:</span>
+            <span class="number" id="p-tare">15310</span>
+            <span>kg</span>
+          </div>
+
+          <div class="weight-row">
+            <span class="label">Net weight</span>
+            <span>:</span>
+            <span class="number" id="p-net">41790</span>
+            <span>kg</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="time-row">
+            <span class="label">Date</span>
+            <span>:</span>
+            <span id="p-grossDate">14/09/2026</span>
+            <span id="p-grossTime">23:25:10</span>
+          </div>
+
+          <div class="time-row">
+            <span class="label">Date</span>
+            <span>:</span>
+            <span id="p-tareDate">14/09/2026</span>
+            <span id="p-tareTime">22:49:44</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashed"></div>
+
+      <div class="total">
+        <span>Total charge</span>
+        <span>:</span>
+        <span>Rs&nbsp; 0/- Rs.</span>
+      </div>
+
+      <footer class="footer">
+        <span>THANKS FOR VISIT</span>
+        <span>OM GRANITE UNIT 2</span>
+        <span>admin</span>
+      </footer>
+    </section>
+
+    <script>
+      function formatDate(value) {
+        return value || "";
+      }
+
+      function formatTime(value) {
+        if (!value) return "";
+
+        return value.length === 5 ? value + ":00" : value;
+      }
+
+      function put(id, value) {
+        document.getElementById(id).textContent = value ?? "";
+      }
+
+      const raw = sessionStorage.getItem("omGraniteReceiptData");
+
+      if (raw) {
+        try {
+          const d = JSON.parse(raw);
+
+          put("p-rst", d.rst);
+          put("p-vehicle", d.vehicle);
+          put("p-transporter", d.transporter);
+          put("p-driver", d.driver);
+          put("p-mobile", d.mobile);
+          put("p-gross", d.gross);
+          put("p-tare", d.tare);
+          put("p-consignor", d.consignor);
+          put("p-mineral", d.mineral || "");
+
+          const gross = Number(d.gross);
+          const tare = Number(d.tare);
+
+          put(
+            "p-net",
+            d.gross !== "" && d.tare !== ""
+              ? String(Number((gross - tare).toFixed(3)))
+              : "",
+          );
+
+          put("p-grossDate", formatDate(d.grossDate));
+          put("p-grossTime", formatTime(d.grossTime));
+          put("p-tareDate", formatDate(d.tareDate));
+          put("p-tareTime", formatTime(d.tareTime));
+        } catch (error) {
+          console.error("Could not load receipt data", error);
+        }
+      }
+    </script>
+  </body>
+</html>
