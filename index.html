@@ -1,293 +1,256 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OM GRANITE UNIT 2 — Receipt Entry</title>
 
-    <style>
-      * {
-        box-sizing: border-box;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OM GRANITE UNIT 2 — Receipt Entry</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f2f4f7;
+      font-family: Arial, sans-serif;
+      color: #171717;
+      padding: 24px;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 26px;
+      border-radius: 10px;
+      box-shadow: 0 4px 18px #00000012;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 0 0 8px;
+    }
+
+    p {
+      color: #555;
+      margin: 0 0 22px;
+    }
+
+    h2 {
+      font-size: 16px;
+      margin: 24px 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #b8bec7;
+      border-radius: 5px;
+      font-size: 15px;
+      background: #fff;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: 0;
+      border-radius: 5px;
+      padding: 12px 18px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: #1769d2;
+      color: #fff;
+    }
+
+    .secondary {
+      background: #e7e9ed;
+      color: #222;
+    }
+
+    @media (max-width: 650px) {
       body {
-        margin: 0;
-        background: #f2f4f7;
-        font-family: Arial, sans-serif;
-        color: #171717;
-        padding: 24px;
+        padding: 10px;
       }
 
       main {
-        max-width: 900px;
-        margin: 0 auto;
-        background: #fff;
-        padding: 26px;
-        border-radius: 10px;
-        box-shadow: 0 4px 18px #00000012;
-      }
-
-      h1 {
-        font-size: 24px;
-        margin: 0 0 8px;
-      }
-      p {
-        color: #555;
-        margin: 0 0 22px;
-      }
-      h2 {
-        font-size: 16px;
-        margin: 24px 0 12px;
-        padding-bottom: 8px;
-        border-bottom: 1px solid #ddd;
+        padding: 16px;
       }
 
       .grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+    }
 
-      label {
-        display: block;
-        font-size: 13px;
-        font-weight: 700;
-        margin-bottom: 6px;
+    @media (max-width: 420px) {
+      .grid {
+        grid-template-columns: 1fr;
       }
+    }
+  </style>
+</head>
 
-      input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #b8bec7;
-        border-radius: 5px;
-        font-size: 15px;
-        background: #fff;
-      }
+<body>
+  <main>
+    <h1>OM GRANITE UNIT 2</h1>
+    <p>
+      Fill in the changing details, then press Generate Receipt. The next page
+      will show the print-ready receipt.
+    </p>
 
-      .actions {
-        display: flex;
-        gap: 10px;
-        margin-top: 24px;
-        flex-wrap: wrap;
-      }
+    <form id="receiptForm">
+      <h2>Receipt and vehicle details</h2>
 
-      button {
-        border: 0;
-        border-radius: 5px;
-        padding: 12px 18px;
-        font-weight: 700;
-        font-size: 15px;
-        cursor: pointer;
-      }
-
-      .primary {
-        background: #1769d2;
-        color: #fff;
-      }
-      .secondary {
-        background: #e7e9ed;
-        color: #222;
-      }
-
-      @media (max-width: 650px) {
-        body {
-          padding: 10px;
-        }
-        main {
-          padding: 16px;
-        }
-        .grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
-
-      @media (max-width: 420px) {
-        .grid {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <main>
-      <h1>OM GRANITE UNIT 2</h1>
-      <p>
-        Fill in the changing details, then press Generate Receipt. The next page
-        will show the print-ready receipt.
-      </p>
-
-      <form id="receiptForm">
-        <h2>Receipt and vehicle details</h2>
-
-        <div class="grid">
-          <div>
-            <label for="rst">RST No.</label>
-            <input id="rst" value="55737" required />
-          </div>
-
-          <div>
-            <label for="vehicle">Vehicle No.</label>
-            <input id="vehicle" value="UP71BT2969" required />
-          </div>
-
-          <div>
-            <label for="consignor">Consignor</label>
-            <input
-              id="consignor"
-              value="Girrajji Buildtech pvt. Ltd"
-              required
-            />
-          </div>
-
-          <div>
-            <label for="transporter">Transporter</label>
-            <input id="transporter" value="SHUBHAM GUPTA" required />
-          </div>
-
-          <div>
-            <label for="driver">Driver Name</label>
-            <input id="driver" value="SURAJ" required />
-          </div>
-
-          <div>
-            <label for="mobile">Mobile No.</label>
-            <input id="mobile" type="tel" value="7897919953" required />
-          </div>
-
-          <div>
-            <label for="mineral">Mineral</label>
-            <input
-              id="mineral"
-              type="text"
-              value="20MM[O]NON VSI"
-              placeholder="Enter mineral name"
-              required
-            />
-          </div>
+      <div class="grid">
+        <div>
+          <label for="rst">RST No.</label>
+          <input id="rst" value="55737" required />
         </div>
 
-        <h2>Gross weight</h2>
-        <div class="grid">
-          <div>
-            <label for="gross">Gross Weight (kg)</label>
-            <input
-              id="gross"
-              type="number"
-              min="0"
-              step="any"
-              value="57100"
-              required
-            />
-          </div>
-
-          <div>
-            <label for="grossDate">Gross Date (DD/MM/YYYY)</label>
-            <input
-              id="grossDate"
-              type="text"
-              value="14/09/2026"
-              placeholder="DD/MM/YYYY"
-              pattern="(0[1-9]|[12]\d|3[01])/(0[1-9]|1[0-2])/\d{4}"
-              title="Enter date in DD/MM/YYYY format, e.g. 14/09/2026"
-              required
-            />
-          </div>
-
-          <div>
-            <label for="grossTime">Gross Time (24-hour)</label>
-            <input
-              id="grossTime"
-              type="text"
-              value="23:25:10"
-              placeholder="HH:MM:SS"
-              pattern="([01]\d|2[0-3]):[0-5]\d:[0-5]\d"
-              title="Enter time in 24-hour format, e.g. 23:25:10"
-              required
-            />
-          </div>
+        <div>
+          <label for="vehicle">Vehicle No.</label>
+          <input id="vehicle" value="UP71BT2969" required />
         </div>
 
-        <h2>Tare weight</h2>
-        <div class="grid">
-          <div>
-            <label for="tare">Tare Weight (kg)</label>
-            <input
-              id="tare"
-              type="number"
-              min="0"
-              step="any"
-              value="15310"
-              required
-            />
-          </div>
-
-          <div>
-            <label for="tareDate">Tare Date (DD/MM/YYYY)</label>
-            <input
-              id="tareDate"
-              type="text"
-              value="14/09/2026"
-              placeholder="DD/MM/YYYY"
-              pattern="(0[1-9]|[12]\d|3[01])/(0[1-9]|1[0-2])/\d{4}"
-              title="Enter date in DD/MM/YYYY format, e.g. 14/09/2026"
-              required
-            />
-          </div>
-
-          <div>
-            <label for="tareTime">Tare Time (24-hour)</label>
-            <input
-              id="tareTime"
-              type="text"
-              value="22:49:44"
-              placeholder="HH:MM:SS"
-              pattern="([01]\d|2[0-3]):[0-5]\d:[0-5]\d"
-              title="Enter time in 24-hour format, e.g. 22:49:44"
-              required
-            />
-          </div>
+        <div>
+          <label for="consignor">Consignor</label>
+          <input id="consignor" value="Girrajji Buildtech pvt. Ltd" required />
         </div>
 
-        <div class="actions">
-          <button class="primary" type="submit">Generate Receipt →</button>
-          <button class="secondary" type="reset">Reset Form</button>
+        <div>
+          <label for="transporter">Transporter</label>
+          <input id="transporter" value="SHUBHAM GUPTA" required />
         </div>
-      </form>
-    </main>
 
-    <script>
-      document
-        .getElementById("receiptForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
+        <div>
+          <label for="driver">Driver Name</label>
+          <input id="driver" value="SURAJ" required />
+        </div>
 
-          const ids = [
-            "rst",
-            "vehicle",
-            "consignor",
-            "transporter",
-            "driver",
-            "mobile",
-            "mineral",
-            "gross",
-            "grossDate",
-            "grossTime",
-            "tare",
-            "tareDate",
-            "tareTime",
-          ];
+        <div>
+          <label for="mobile">Mobile No.</label>
+          <input id="mobile" type="tel" value="7897919953" required />
+        </div>
 
-          const data = {};
-          ids.forEach((id) => {
-            data[id] = document.getElementById(id).value;
-          });
+        <div>
+          <label for="tyre">Tyre</label>
+          <input id="tyre" type="text" value="18 TYRE" required />
+        </div>
 
-          data.generatedAt = new Date().toISOString();
+        <div>
+          <label for="mineral">Mineral</label>
+          <input id="mineral" type="text" value="20MM[O]NON VSI" placeholder="Enter mineral name" required />
+        </div>
+      </div>
 
-          sessionStorage.setItem("omGraniteReceiptData", JSON.stringify(data));
-          window.location.href = "receipt.html";
+      <h2>Gross weight</h2>
+      <div class="grid">
+        <div>
+          <label for="gross">Gross Weight (kg)</label>
+          <input id="gross" type="number" min="0" step="any" value="57100" required />
+        </div>
+
+        <div>
+          <label for="grossDate">Gross Date (DD/MM/YYYY)</label>
+          <input id="grossDate" type="text" value="14/09/2026" placeholder="DD/MM/YYYY"
+            pattern="(0[1-9]|[12]\d|3[01])/(0[1-9]|1[0-2])/\d{4}"
+            title="Enter date in DD/MM/YYYY format, e.g. 14/09/2026" required />
+        </div>
+
+        <div>
+          <label for="grossTime">Gross Time (24-hour)</label>
+          <input id="grossTime" type="text" value="23:25:10" placeholder="HH:MM:SS"
+            pattern="([01]\d|2[0-3]):[0-5]\d:[0-5]\d" title="Enter time in 24-hour format, e.g. 23:25:10" required />
+        </div>
+      </div>
+
+      <h2>Tare weight</h2>
+      <div class="grid">
+        <div>
+          <label for="tare">Tare Weight (kg)</label>
+          <input id="tare" type="number" min="0" step="any" value="15310" required />
+        </div>
+
+        <div>
+          <label for="tareDate">Tare Date (DD/MM/YYYY)</label>
+          <input id="tareDate" type="text" value="14/09/2026" placeholder="DD/MM/YYYY"
+            pattern="(0[1-9]|[12]\d|3[01])/(0[1-9]|1[0-2])/\d{4}"
+            title="Enter date in DD/MM/YYYY format, e.g. 14/09/2026" required />
+        </div>
+
+        <div>
+          <label for="tareTime">Tare Time (24-hour)</label>
+          <input id="tareTime" type="text" value="22:49:44" placeholder="HH:MM:SS"
+            pattern="([01]\d|2[0-3]):[0-5]\d:[0-5]\d" title="Enter time in 24-hour format, e.g. 22:49:44" required />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="primary" type="submit">Generate Receipt →</button>
+        <button class="secondary" type="reset">Reset Form</button>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    document
+      .getElementById("receiptForm")
+      .addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const ids = [
+          "rst",
+          "vehicle",
+          "tyre",
+          "consignor",
+          "transporter",
+          "driver",
+          "mobile",
+          "mineral",
+          "gross",
+          "grossDate",
+          "grossTime",
+          "tare",
+          "tareDate",
+          "tareTime",
+        ];
+
+        const data = {};
+        ids.forEach((id) => {
+          data[id] = document.getElementById(id).value;
         });
-    </script>
-  </body>
+
+        data.generatedAt = new Date().toISOString();
+
+        sessionStorage.setItem("omGraniteReceiptData", JSON.stringify(data));
+        window.location.href = "receipt.html";
+      });
+  </script>
+</body>
+
 </html>

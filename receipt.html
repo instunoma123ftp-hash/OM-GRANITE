@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DALAPUR GRANITE - Receipt</title>
+    <title>OM GRANITE - Receipt</title>
 
     <style>
       * {
@@ -449,7 +449,7 @@
           <div class="detail-row">
             <span class="label">TYRE</span>
             <span class="colon">:</span>
-            <span class="value">18 TYRE</span>
+            <span class="value" id="p-tyre">18 TYRE</span>
           </div>
 
           <div class="detail-row">
@@ -574,6 +574,7 @@
           put("p-tare", d.tare);
           put("p-consignor", d.consignor);
           put("p-mineral", d.mineral || "");
+          put("p-tyre", d.tyre);
 
           const gross = Number(d.gross);
           const tare = Number(d.tare);
